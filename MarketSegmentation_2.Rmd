@@ -87,6 +87,7 @@ ProjectDatafactor_scaled = apply(ProjectData, 2, function(r) {
     res
 })
 ProjectData <- ProjectDatafactor_scaled
+
 ```
 
 <hr>\clearpage
