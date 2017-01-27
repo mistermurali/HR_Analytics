@@ -23,23 +23,7 @@ All material and code is available at the [INSEAD Data Analytics for Business](h
 
 <hr>\clearpage
 
-# The Business Questions 
 
-The dataset that was used for this analysis contains the following variables: 
-1. Satisfaction level - a number between 0 and 1 - level of satisfaction in current function
-2. Evaluation - number between 0 and 1 - 
-3. Number of projects - number of projects
-4. Average monthly hours - 
-5. Time spent company - number of years worked for the company
-6. Work accident - 0 if you've had a work accident, 1 if you have
-7. Left - 1 if you've left the company, 0 means you haven't
-8. Promotion - 1 if you've had a promotion in the last 5 years, and 0 and if you haven't
-9. Department - qualitative (string) 
-10. Salary - text - "high", "medium" "low"
-
-Business Questions investigated: 
-
-1. Why are our
  
 
 
@@ -93,6 +77,28 @@ source("read_data.R")
 
 
 <hr>\clearpage
+
+
+# The Business Questions 
+
+The dataset that was used for this analysis contains the following variables: 
+1. Satisfaction level - a number between 0 and 1 - level of satisfaction in current function
+2. Evaluation - number between 0 and 1 - 
+3. Number of projects - number of projects
+4. Average monthly hours - 
+5. Time spent company - number of years worked for the company
+6. Work accident - 0 if you've had a work accident, 1 if you have
+7. Left - 1 if you've left the company, 0 means you haven't
+8. Promotion - 1 if you've had a promotion in the last 5 years, and 0 and if you haven't
+9. Department - qualitative (string) 
+10. Salary - text - "high", "medium" "low"
+
+Business Questions investigated: 
+
+1. Why are our
+
+
+
 
 # Part 1: Key Customer Characteristics
 
