@@ -54,6 +54,7 @@ options(knitr.kable.NA = '')
 
 <hr>\clearpage
 
+
 # The Data
 
 First we load the data to use (see the raw .Rmd file to change the data file as needed):
