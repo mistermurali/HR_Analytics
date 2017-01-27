@@ -85,7 +85,7 @@ The dataset that was used for this analysis contains the following variables:
 1. Satisfaction level - a number between 0 and 1 - level of satisfaction in current function
 2. Evaluation - number between 0 and 1 - 
 3. Number of projects - number of projects
-4. Average monthly hours - 
+4. Average monthly hours - From `r min(ProjectData[,4])` to `r max(ProjectData[,4])`
 5. Time spent company - number of years worked for the company
 6. Work accident - 0 if you've had a work accident, 1 if you have
 7. Left - 1 if you've left the company, 0 means you haven't
