@@ -47,6 +47,7 @@ options(knitr.kable.NA = '')
 
 <hr>\clearpage
 
+
 # The Data
 
 First we load the data to use (see the raw .Rmd file to change the data file as needed):
@@ -81,9 +82,13 @@ The dataset that was used for this analysis contains the following variables:
 2. Evaluation - number between 0 and 1 - 
 
 3. Number of projects - number of projects
+<<<<<<< HEAD
 
 4. Average monthly hours -
 
+=======
+4. Average monthly hours - From `r min(ProjectData[,4])` to `r max(ProjectData[,4])`
+>>>>>>> 645c1eea403f8522ae71f096c1a1d56b2cbe29d1
 5. Time spent company - number of years worked for the company
 
 6. Work accident - 0 if you've had a work accident, 1 if you have
