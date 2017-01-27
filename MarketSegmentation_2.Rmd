@@ -82,26 +82,30 @@ The dataset that was used for this analysis contains the following variables:
 2. Evaluation - number between 0 and 1 - 
 
 3. Number of projects - number of projects
-<<<<<<< HEAD
 
-4. Average monthly hours -
-
-=======
 4. Average monthly hours - From `r min(ProjectData[,4])` to `r max(ProjectData[,4])`
->>>>>>> 645c1eea403f8522ae71f096c1a1d56b2cbe29d1
+
 5. Time spent company - number of years worked for the company
 
 6. Work accident - 0 if you've had a work accident, 1 if you have
+
 7. Left - 1 if you've left the company, 0 means you haven't
+
 8. Promotion - 1 if you've had a promotion in the last 5 years, and 0 and if you haven't
+
 9. Department - qualitative (string) 
+
 10. Salary - text - "high", "medium" "low"
 
 Business Questions investigated: 
 
-1. Compare the mean sof the 
+1. What causes employees to leave the company? 
 
+2. What are the most important factors that differ between those who stay and those who leave? (segmentation)
 
+3. How do we use this to our advantage to ensure that people stay as long as possible? 
+
+4. Are our best employees overworked?
 
 
 # Part 1: Key Customer Characteristics
@@ -168,27 +172,10 @@ thecor = round(cor(ProjectDataFactor),2)
 iprint.df(round(thecor,2), scale=TRUE)
 ```
 
-**Questions**
-
-1. Do you see any high correlations between the responses? Do they make sense? 
-2. What do these correlations imply?
-
-**Answers:**
-
-*
-*
-*
-*
-*
-*
-*
-*
-*
-*
 
 ## Step 4: Choose number of factors
 
-Clearly the survey asked many redundant questions (can you think some reasons why?), so we may be able to actually "group" these 29 attitude questions into only a few "key factors". This not only will simplify the data, but will also greatly facilitate our understanding of the customers.
+Clearly the survey asked many redundant questions (can you think some reasons why?), so we may be able to actually "group" these 10 attitude questions into only a few "key factors". This not only will simplify the data, but will also greatly facilitate our understanding of the employees.
 
 To do so, we use methods called [Principal Component Analysis](https://en.wikipedia.org/wiki/Principal_component_analysis) and [factor analysis](https://en.wikipedia.org/wiki/Factor_analysis) as also discussed in the [Dimensionality Reduction readings](http://inseaddataanalytics.github.io/INSEADAnalytics/CourseSessions/Sessions23/FactorAnalysisReading.html). We can use two different R commands for this (they make slightly different information easily available as output): the command `principal` (check `help(principal)` from R package [psych](http://personality-project.org/r/psych/)), and the command `PCA` from R package [FactoMineR](http://factominer.free.fr) - there are more packages and commands for this, as these methods are very widely used.  
 
@@ -223,24 +210,12 @@ colnames(df) <- c("eigenvalues", "components", "abline")
 iplot.df(melt(df, id="components"))
 ```
 
-**Questions:**
 
-1. Can you explain what this table and the plot are? What do they indicate? What can we learn from these?
-2. Why does the plot have this specific shape? Could the plotted line be increasing? 
-3. What characteristics of these results would we prefer to see? Why?
+1. What do we learn from these plots? 
 
-**Answers**
 
-*
-*
-*
-*
-*
-*
-*
-*
-*
-*
+
+
 
 ## Step 5: Interpret the factors
 
@@ -282,23 +257,15 @@ iprint.df(Rotated_Factors_thres, scale=TRUE)
 
 **Questions**
 
-1. What do the first couple of factors mean? Do they make business sense? 
-2. How many factors should we choose for this data/customer base? Please try a few and explain your final choice based on a) statistical arguments, b) on interpretation arguments, c) on business arguments (**you need to consider all three types of arguments**)
-3. How would you interpret the factors you selected?
-4. What lessons about data science do you learn when doing this analysis? Please comment. 
+The first couple of factors mean
 
-**Answers**
 
-*
-*
-*
-*
-*
-*
-*
-*
-*
-*
+
+The factors that should be chosen for this data is based on: a) statistical arguments, b) on interpretation arguments, c) on business arguments 
+
+How would you interpret the factors you selected?
+
+
 
 ## Step 6:  Save factor scores 
 
@@ -311,23 +278,10 @@ colnames(NEW_ProjectData)<-paste("DV (Factor)",1:ncol(NEW_ProjectData),sep=" ")
 iprint.df(t(head(NEW_ProjectData, 10)), scale=TRUE)
 ```
 
-**Questions**
 
-1. Can you describe some of the people using the new derived variables (factor scores)? 
-2. Which of the 29 initial variables would you select to represent each of the factors you selected?  
+So according to the data, some of the people can be described g the new derived variables (factor scores)
 
-**Answers**
 
-*
-*
-*
-*
-*
-*
-*
-*
-*
-*
 
 <hr>\clearpage
 
