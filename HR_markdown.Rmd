@@ -1,44 +1,38 @@
 ---
 title: "HR_script"
 author: "crodrigu"
-date: "January 26, 2017"
+date: "February 03, 2017"
 output: html_document
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-```
 
-## R Markdown
-
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r}
 emp_data<-read.csv("data/HR_comma_sep.csv")
 ProjectData <- data.matrix(emp_data) 
 ProjectData_INITIAL <- ProjectData
+library("magrittr")
+library("dplyr")
 mean(emp_data[,1])
 ```
 
 ## Including Plots
 
 You can also embed plots, for example:
-```{r pressure, echo=FALSE}
+```{r echo=FALSE}
 hr_ds_current <- emp_data %>% filter(left == 0)
 (tot_current <- nrow(hr_ds_current))
 
 ```
 
-```{r pressure, echo=FALSE}
+```{r echo=FALSE}
 hr_ds_left <- emp_data %>% filter(left == 1)
 (tot_left <- nrow(hr_ds_left))
 ```
 
 In the following, the comparison between current emplyees metrics and the ones who left is introduced.
 
-```{r pressure, echo=FALSE}
+```{r echo=FALSE}
 boxplot(hr_ds_current$satisfaction_level, hr_ds_left$satisfaction_level, names = c("current", "left"))
 t.test(hr_ds_current$satisfaction_level, hr_ds_left$satisfaction_level, var.equal = FALSE)
 ```
@@ -46,14 +40,14 @@ Above test and boxplot shows how the average satisfaction level of the employees
 
 
 
-```{r pressure, echo=FALSE}
+```{r echo=FALSE}
 boxplot(hr_ds_current$last_evaluation, hr_ds_left$last_evaluation, names = c("current", "left"))
 t.test(hr_ds_current$last_evaluation, hr_ds_left$last_evaluation, var.equal = FALSE)
 ```
 Above test p-value and boxplot shows how that there is no significative difference in mean associated to the last evaluation between current and employees who left.
 
 
-```{r pressure, echo=FALSE}
+```{r echo=FALSE}
 boxplot(hr_ds_current$average_montly_hours, hr_ds_left$average_montly_hours, names = c("current", "left"))
 t.test(hr_ds_current$average_montly_hours, hr_ds_left$average_montly_hours, var.equal = FALSE)
 
@@ -61,13 +55,13 @@ t.test(hr_ds_current$average_montly_hours, hr_ds_left$average_montly_hours, var.
 The average working hours of employees who left are significative higher than the current ones.
 
 
-```{r pressure, echo=FALSE}
+```{r echo=FALSE}
 boxplot(hr_ds_current$time_spend_company, hr_ds_left$time_spend_company, names = c("current", "left"))
 t.test(hr_ds_current$time_spend_company, hr_ds_left$time_spend_company, var.equal = FALSE)
 ```
 The current employees have spent on average fewer years than the employees who left.
 
-```{r pressure, echo=FALSE}
+```{r echo=FALSE}
 boxplot(hr_ds_current$number_project, hr_ds_left$number_project, names = c("current", "left"))
 t.test(hr_ds_current$number_project, hr_ds_left$number_project, var.equal = FALSE)
 ```
@@ -78,10 +72,10 @@ they were used to work for long hours in office
 a very few got a promotion within the last few years
 unsatisfied employees have been members of just two projects or strictly more than five
 
-```{r pressure, echo=FALSE}
+```{r echo=FALSE}
 
 ```
 
 
-```{r pressure, echo=FALSE}
+```{r echo=FALSE}
 ```
