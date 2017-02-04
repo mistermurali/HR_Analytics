@@ -55,21 +55,7 @@ MIN_VALUE = 0.5
 # DEFAULT is 10. If the number is large the report may be slow.
 max_data_report = 10
 
-
-ProjectData <- read.csv(datafile_name)
-ProjectData <- data.matrix(ProjectData) 
-ProjectData_INITIAL <- ProjectData
-ProjectDatafactor_scaled = apply(ProjectData, 2, function(r) {
-    if (sd(r) != 0) 
-        res = (r - mean(r))/sd(r) else res = 0 * r
-    res
-})
-ProjectData <- ProjectDatafactor_scaled
-
 source("read_data.R")
-
-
-
 
 
 ```
@@ -96,6 +82,7 @@ The dataset that was used for this analysis contains the following variables:
 Business Questions investigated: 
 
 1. Why are our
+
 
 
 
@@ -128,7 +115,7 @@ minimum_variance_explained = 65  # between 1 and 100
 
 # Please ENTER the number of factors to use 
 # (Only used in case "manual" is the factor selection criterion used).
-manual_numb_factors_used = 10
+manual_numb_factors_used = 3
 
 # Please ENTER the rotation eventually used (e.g. "none", "varimax", "quatimax", "promax", "oblimin", "simplimax", and "cluster" - see help(principal)). Default is "varimax"
 rotation_used = "varimax"
