@@ -15,6 +15,7 @@ output:
 always_allow_html: yes
 ---
 
+<<<<<<< HEAD
 > **IMPORTANT**: Please make sure you create a copy of this file with a customized name, so that your work (e.g. answers to the questions) is not over-written when you pull the latest content from the course github. 
 This is a **template process for market segmentation based on survey data**, using the  [Boats cases A](http://inseaddataanalytics.github.io/INSEADAnalytics/Boats-A-prerelease.pdf) and  [B](http://inseaddataanalytics.github.io/INSEADAnalytics/Boats-B-prerelease.pdf).
 
@@ -23,6 +24,8 @@ All material and code is available at the [INSEAD Data Analytics for Business](h
 
 <hr>\clearpage
 
+=======
+>>>>>>> 105ef90745c3db6ab0f955b537df872ee07e7730
 # The Process
 
 The "high level" process template is split in 3 parts, corresponding to the course sessions 3-4, 5-6, and an optional last part: 
@@ -106,6 +109,8 @@ Business Questions investigated:
 3. How do we use this to our advantage to ensure that people stay as long as possible? 
 
 4. Are our best employees overworked?
+
+
 
 
 # Part 1: Key Customer Characteristics
