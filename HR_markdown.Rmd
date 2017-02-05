@@ -126,6 +126,158 @@ t.test(hr_ds_current$number_project, hr_ds_left$number_project, var.equal = FALS
 
 The average number of projects that employees who leave is higher than that of those who are still employed at the company.
 
+In order to analyse the data per department, we create a table per department.
+```{r echo=FALSE}
+
+accounting <- emp_data[which(emp_data$Department=="accounting"),]
+
+hr <- emp_data[which(emp_data$Department=="hr"),]
+
+IT<-emp_data[which(emp_data$Department=="IT"),]
+
+management <- emp_data[which(emp_data$Department=="management"),]
+
+product_mng <- emp_data[which(emp_data$Department=="product_mng"),]
+
+marketing <- emp_data[which(emp_data$Department=="marketing"),]
+
+RandD <- emp_data[which(emp_data$Department=="RandD"),]
+
+sales <- emp_data[which(emp_data$Department=="sales"),]
+
+support <- emp_data[which(emp_data$Department=="support"),]
+
+technical <- emp_data[which(emp_data$Department=="technical"),]
+```
+
+
+Then, we calculate the mean parameters of each department.
+
+```{r echo=FALSE}
+accounting_mean<-c(round(mean(accounting[,1]),2),round(mean(accounting[,2]),2),round(mean(accounting[,3]),2),round(mean(accounting[,4]),2),round(mean(accounting[,5]),2),round(mean(accounting[,6]),2),round(mean(accounting[,7]),2),round(mean(accounting[,8]),2),round((sum(accounting$salary=="low")+sum(accounting$salary=="medium")*2+sum(accounting$salary=="high")*3)/nrow(accounting),2))
+
+hr_mean<-c(round(mean(hr[,1]),2),round(mean(hr[,2]),2),round(mean(hr[,3]),2),round(mean(hr[,4]),2),round(mean(hr[,5]),2),round(mean(hr[,6]),2),round(mean(hr[,7]),2),round(mean(hr[,8]),2),round((sum(hr$salary=="low")+sum(hr$salary=="medium")*2+sum(hr$salary=="high")*3)/nrow(hr),2))
+
+IT_mean<-c(round(mean(IT[,1]),2),round(mean(IT[,2]),2),round(mean(IT[,3]),2),round(mean(IT[,4]),2),round(mean(IT[,5]),2),round(mean(IT[,6]),2),round(mean(IT[,7]),2),round(mean(IT[,8]),2),round((sum(IT$salary=="low")+sum(IT$salary=="medium")*2+sum(IT$salary=="high")*3)/nrow(IT),2))
+
+management_mean<-c(round(mean(management[,1]),2),round(mean(management[,2]),2),round(mean(management[,3]),2),round(mean(management[,4]),2),round(mean(management[,5]),2),round(mean(management[,6]),2),round(mean(management[,7]),2),round(mean(management[,8]),2),round((sum(management$salary=="low")+sum(management$salary=="medium")*2+sum(management$salary=="high")*3)/nrow(management),2))
+
+marketing_mean<-c(round(mean(marketing[,1]),2),round(mean(marketing[,2]),2),round(mean(marketing[,3]),2),round(mean(marketing[,4]),2),round(mean(marketing[,5]),2),round(mean(marketing[,6]),2),round(mean(marketing[,7]),2),round(mean(marketing[,8]),2),round((sum(marketing$salary=="low")+sum(marketing$salary=="medium")*2+sum(marketing$salary=="high")*3)/nrow(marketing),2))
+
+product_mng_mean<-c(round(mean(product_mng[,1]),2),round(mean(product_mng[,2]),2),round(mean(product_mng[,3]),2),round(mean(product_mng[,4]),2),round(mean(product_mng[,5]),2),round(mean(product_mng[,6]),2),round(mean(product_mng[,7]),2),round(mean(product_mng[,8]),2),round((sum(product_mng$salary=="low")+sum(product_mng$salary=="medium")*2+sum(product_mng$salary=="high")*3)/nrow(product_mng),2))
+
+RandD_mean<-c(round(mean(RandD[,1]),2),round(mean(RandD[,2]),2),round(mean(RandD[,3]),2),round(mean(RandD[,4]),2),round(mean(RandD[,5]),2),round(mean(RandD[,6]),2),round(mean(RandD[,7]),2),round(mean(RandD[,8]),2),round((sum(RandD$salary=="low")+sum(RandD$salary=="medium")*2+sum(RandD$salary=="high")*3)/nrow(RandD),2))
+
+sales_mean<-c(round(mean(sales[,1]),2),round(mean(sales[,2]),2),round(mean(sales[,3]),2),round(mean(sales[,4]),2),round(mean(sales[,5]),2),round(mean(sales[,6]),2),round(mean(sales[,7]),2),round(mean(sales[,8]),2),round((sum(sales$salary=="low")+sum(sales$salary=="medium")*2+sum(sales$salary=="high")*3)/nrow(sales),2))
+
+support_mean<-c(round(mean(support[,1]),2),round(mean(support[,2]),2),round(mean(support[,3]),2),round(mean(support[,4]),2),round(mean(support[,5]),2),round(mean(support[,6]),2),round(mean(support[,7]),2),round(mean(support[,8]),2),round((sum(support$salary=="low")+sum(support$salary=="medium")*2+sum(support$salary=="high")*3)/nrow(support),2))
+
+technical_mean<-c(round(mean(technical[,1]),2),round(mean(technical[,2]),2),round(mean(technical[,3]),2),round(mean(technical[,4]),2),round(mean(technical[,5]),2),round(mean(technical[,6]),2),round(mean(technical[,7]),2),round(mean(technical[,8]),2),round((sum(technical$salary=="low")+sum(technical$salary=="medium")*2+sum(technical$salary=="high")*3)/nrow(technical),2))
+
+mean_dept <- rbind(accounting_mean,hr_mean,IT_mean,management_mean,marketing_mean,product_mng_mean,RandD_mean,sales_mean,support_mean, technical_mean)
+
+rownames(mean_dept) <- c("accounting","HR","IT", "management","marketing","product management","researche and development","sales","support","technical")
+
+colnames(mean_dept) <- c("satisfaction level","last evaluation","number of projects","average monthly hours","time spent in the company","work accident","left company","promotion during last 5 years","salary category")
+
+mean_dept
+```
+
+
+
+We calculate the standard deviation of each parameter.
+```{r echo=FALSE}
+accounting_sd<-c(round(sd(accounting[,1]),2),round(sd(accounting[,2]),2),round(sd(accounting[,3]),2),round(sd(accounting[,4]),2),round(sd(accounting[,5]),2),round(sd(accounting[,6]),2),round(sd(accounting[,7]),2),round(sd(accounting[,8]),2),round((sum(accounting$salary=="low")+sum(accounting$salary=="medium")*2+sum(accounting$salary=="high")*3)/nrow(accounting),2))
+
+hr_sd<-c(round(sd(hr[,1]),2),round(sd(hr[,2]),2),round(sd(hr[,3]),2),round(sd(hr[,4]),2),round(sd(hr[,5]),2),round(sd(hr[,6]),2),round(sd(hr[,7]),2),round(sd(hr[,8]),2),round((sum(hr$salary=="low")+sum(hr$salary=="medium")*2+sum(hr$salary=="high")*3)/nrow(hr),2))
+
+IT_sd<-c(round(sd(IT[,1]),2),round(sd(IT[,2]),2),round(sd(IT[,3]),2),round(sd(IT[,4]),2),round(sd(IT[,5]),2),round(sd(IT[,6]),2),round(sd(IT[,7]),2),round(sd(IT[,8]),2),round((sum(IT$salary=="low")+sum(IT$salary=="medium")*2+sum(IT$salary=="high")*3)/nrow(IT),2))
+
+management_sd<-c(round(sd(management[,1]),2),round(sd(management[,2]),2),round(sd(management[,3]),2),round(sd(management[,4]),2),round(sd(management[,5]),2),round(sd(management[,6]),2),round(sd(management[,7]),2),round(sd(management[,8]),2),round((sum(management$salary=="low")+sum(management$salary=="medium")*2+sum(management$salary=="high")*3)/nrow(management),2))
+
+marketing_sd<-c(round(sd(marketing[,1]),2),round(sd(marketing[,2]),2),round(sd(marketing[,3]),2),round(sd(marketing[,4]),2),round(sd(marketing[,5]),2),round(sd(marketing[,6]),2),round(sd(marketing[,7]),2),round(sd(marketing[,8]),2),round((sum(marketing$salary=="low")+sum(marketing$salary=="medium")*2+sum(marketing$salary=="high")*3)/nrow(marketing),2))
+
+product_mng_sd<-c(round(sd(product_mng[,1]),2),round(sd(product_mng[,2]),2),round(sd(product_mng[,3]),2),round(sd(product_mng[,4]),2),round(sd(product_mng[,5]),2),round(sd(product_mng[,6]),2),round(sd(product_mng[,7]),2),round(sd(product_mng[,8]),2),round((sum(product_mng$salary=="low")+sum(product_mng$salary=="medium")*2+sum(product_mng$salary=="high")*3)/nrow(product_mng),2))
+
+RandD_sd<-c(round(sd(RandD[,1]),2),round(sd(RandD[,2]),2),round(sd(RandD[,3]),2),round(sd(RandD[,4]),2),round(sd(RandD[,5]),2),round(sd(RandD[,6]),2),round(sd(RandD[,7]),2),round(sd(RandD[,8]),2),round((sum(RandD$salary=="low")+sum(RandD$salary=="medium")*2+sum(RandD$salary=="high")*3)/nrow(RandD),2))
+
+sales_sd<-c(round(sd(sales[,1]),2),round(sd(sales[,2]),2),round(sd(sales[,3]),2),round(sd(sales[,4]),2),round(sd(sales[,5]),2),round(sd(sales[,6]),2),round(sd(sales[,7]),2),round(sd(sales[,8]),2),round((sum(sales$salary=="low")+sum(sales$salary=="medium")*2+sum(sales$salary=="high")*3)/nrow(sales),2))
+
+support_sd<-c(round(sd(support[,1]),2),round(sd(support[,2]),2),round(sd(support[,3]),2),round(sd(support[,4]),2),round(sd(support[,5]),2),round(sd(support[,6]),2),round(sd(support[,7]),2),round(sd(support[,8]),2),round((sum(support$salary=="low")+sum(support$salary=="medium")*2+sum(support$salary=="high")*3)/nrow(support),2))
+
+technical_sd<-c(round(sd(technical[,1]),2),round(sd(technical[,2]),2),round(sd(technical[,3]),2),round(sd(technical[,4]),2),round(sd(technical[,5]),2),round(sd(technical[,6]),2),round(sd(technical[,7]),2),round(sd(technical[,8]),2),round((sum(technical$salary=="low")+sum(technical$salary=="medium")*2+sum(technical$salary=="high")*3)/nrow(technical),2))
+
+sd_dept <- rbind(accounting_sd,hr_sd,IT_sd,management_sd,marketing_sd,product_mng_sd,RandD_sd,sales_sd,support_sd, technical_sd)
+
+rownames(sd_dept) <- c("accounting","HR","IT", "management","marketing","product management","researche and development","sales","support","technical")
+
+colnames(sd_dept) <- c("satisfaction level","last evaluation","number of projects","average monthly hours","time spent in the company","work accident","left company","promotion during last 5 years","salary category")
+
+sd_dept
+```
+
+We calculate the minimum value of each parameter.
+```{r echo=FALSE}
+accounting_min<-c(round(min(accounting[,1]),2),round(min(accounting[,2]),2),round(min(accounting[,3]),2),round(min(accounting[,4]),2),round(min(accounting[,5]),2),round(min(accounting[,6]),2),round(min(accounting[,7]),2),round(min(accounting[,8]),2),round((sum(accounting$salary=="low")+sum(accounting$salary=="medium")*2+sum(accounting$salary=="high")*3)/nrow(accounting),2))
+
+hr_min<-c(round(min(hr[,1]),2),round(min(hr[,2]),2),round(min(hr[,3]),2),round(min(hr[,4]),2),round(min(hr[,5]),2),round(min(hr[,6]),2),round(min(hr[,7]),2),round(min(hr[,8]),2),round((sum(hr$salary=="low")+sum(hr$salary=="medium")*2+sum(hr$salary=="high")*3)/nrow(hr),2))
+
+IT_min<-c(round(min(IT[,1]),2),round(min(IT[,2]),2),round(min(IT[,3]),2),round(min(IT[,4]),2),round(min(IT[,5]),2),round(min(IT[,6]),2),round(min(IT[,7]),2),round(min(IT[,8]),2),round((sum(IT$salary=="low")+sum(IT$salary=="medium")*2+sum(IT$salary=="high")*3)/nrow(IT),2))
+
+management_min<-c(round(min(management[,1]),2),round(min(management[,2]),2),round(min(management[,3]),2),round(min(management[,4]),2),round(min(management[,5]),2),round(min(management[,6]),2),round(min(management[,7]),2),round(min(management[,8]),2),round((sum(management$salary=="low")+sum(management$salary=="medium")*2+sum(management$salary=="high")*3)/nrow(management),2))
+
+marketing_min<-c(round(min(marketing[,1]),2),round(min(marketing[,2]),2),round(min(marketing[,3]),2),round(min(marketing[,4]),2),round(min(marketing[,5]),2),round(min(marketing[,6]),2),round(min(marketing[,7]),2),round(min(marketing[,8]),2),round((sum(marketing$salary=="low")+sum(marketing$salary=="medium")*2+sum(marketing$salary=="high")*3)/nrow(marketing),2))
+
+product_mng_min<-c(round(min(product_mng[,1]),2),round(min(product_mng[,2]),2),round(min(product_mng[,3]),2),round(min(product_mng[,4]),2),round(min(product_mng[,5]),2),round(min(product_mng[,6]),2),round(min(product_mng[,7]),2),round(min(product_mng[,8]),2),round((sum(product_mng$salary=="low")+sum(product_mng$salary=="medium")*2+sum(product_mng$salary=="high")*3)/nrow(product_mng),2))
+
+RandD_min<-c(round(min(RandD[,1]),2),round(min(RandD[,2]),2),round(min(RandD[,3]),2),round(min(RandD[,4]),2),round(min(RandD[,5]),2),round(min(RandD[,6]),2),round(min(RandD[,7]),2),round(min(RandD[,8]),2),round((sum(RandD$salary=="low")+sum(RandD$salary=="medium")*2+sum(RandD$salary=="high")*3)/nrow(RandD),2))
+
+sales_min<-c(round(min(sales[,1]),2),round(min(sales[,2]),2),round(min(sales[,3]),2),round(min(sales[,4]),2),round(min(sales[,5]),2),round(min(sales[,6]),2),round(min(sales[,7]),2),round(min(sales[,8]),2),round((sum(sales$salary=="low")+sum(sales$salary=="medium")*2+sum(sales$salary=="high")*3)/nrow(sales),2))
+
+support_min<-c(round(min(support[,1]),2),round(min(support[,2]),2),round(min(support[,3]),2),round(min(support[,4]),2),round(min(support[,5]),2),round(min(support[,6]),2),round(min(support[,7]),2),round(min(support[,8]),2),round((sum(support$salary=="low")+sum(support$salary=="medium")*2+sum(support$salary=="high")*3)/nrow(support),2))
+
+technical_min<-c(round(min(technical[,1]),2),round(min(technical[,2]),2),round(min(technical[,3]),2),round(min(technical[,4]),2),round(min(technical[,5]),2),round(min(technical[,6]),2),round(min(technical[,7]),2),round(min(technical[,8]),2),round((sum(technical$salary=="low")+sum(technical$salary=="medium")*2+sum(technical$salary=="high")*3)/nrow(technical),2))
+
+min_dept <- rbind(accounting_min,hr_min,IT_min,management_min,marketing_min,product_mng_min,RandD_min,sales_min,support_min, technical_min)
+
+rownames(min_dept) <- c("accounting","HR","IT", "management","marketing","product management","researche and development","sales","support","technical")
+
+colnames(min_dept) <- c("satisfaction level","last evaluation","number of projects","average monthly hours","time spent in the company","work accident","left company","promotion during last 5 years","salary category")
+
+min_dept
+```
+
+We calculate the minimum value of each parameter.
+```{r echo=FALSE}
+accounting_max<-c(round(max(accounting[,1]),2),round(max(accounting[,2]),2),round(max(accounting[,3]),2),round(max(accounting[,4]),2),round(max(accounting[,5]),2),round(max(accounting[,6]),2),round(max(accounting[,7]),2),round(max(accounting[,8]),2),round((sum(accounting$salary=="low")+sum(accounting$salary=="medium")*2+sum(accounting$salary=="high")*3)/nrow(accounting),2))
+
+hr_max<-c(round(max(hr[,1]),2),round(max(hr[,2]),2),round(max(hr[,3]),2),round(max(hr[,4]),2),round(max(hr[,5]),2),round(max(hr[,6]),2),round(max(hr[,7]),2),round(max(hr[,8]),2),round((sum(hr$salary=="low")+sum(hr$salary=="medium")*2+sum(hr$salary=="high")*3)/nrow(hr),2))
+
+IT_max<-c(round(max(IT[,1]),2),round(max(IT[,2]),2),round(max(IT[,3]),2),round(max(IT[,4]),2),round(max(IT[,5]),2),round(max(IT[,6]),2),round(max(IT[,7]),2),round(max(IT[,8]),2),round((sum(IT$salary=="low")+sum(IT$salary=="medium")*2+sum(IT$salary=="high")*3)/nrow(IT),2))
+
+management_max<-c(round(max(management[,1]),2),round(max(management[,2]),2),round(max(management[,3]),2),round(max(management[,4]),2),round(max(management[,5]),2),round(max(management[,6]),2),round(max(management[,7]),2),round(max(management[,8]),2),round((sum(management$salary=="low")+sum(management$salary=="medium")*2+sum(management$salary=="high")*3)/nrow(management),2))
+
+marketing_max<-c(round(max(marketing[,1]),2),round(max(marketing[,2]),2),round(max(marketing[,3]),2),round(max(marketing[,4]),2),round(max(marketing[,5]),2),round(max(marketing[,6]),2),round(max(marketing[,7]),2),round(max(marketing[,8]),2),round((sum(marketing$salary=="low")+sum(marketing$salary=="medium")*2+sum(marketing$salary=="high")*3)/nrow(marketing),2))
+
+product_mng_max<-c(round(max(product_mng[,1]),2),round(max(product_mng[,2]),2),round(max(product_mng[,3]),2),round(max(product_mng[,4]),2),round(max(product_mng[,5]),2),round(max(product_mng[,6]),2),round(max(product_mng[,7]),2),round(max(product_mng[,8]),2),round((sum(product_mng$salary=="low")+sum(product_mng$salary=="medium")*2+sum(product_mng$salary=="high")*3)/nrow(product_mng),2))
+
+RandD_max<-c(round(max(RandD[,1]),2),round(max(RandD[,2]),2),round(max(RandD[,3]),2),round(max(RandD[,4]),2),round(max(RandD[,5]),2),round(max(RandD[,6]),2),round(max(RandD[,7]),2),round(max(RandD[,8]),2),round((sum(RandD$salary=="low")+sum(RandD$salary=="medium")*2+sum(RandD$salary=="high")*3)/nrow(RandD),2))
+
+sales_max<-c(round(max(sales[,1]),2),round(max(sales[,2]),2),round(max(sales[,3]),2),round(max(sales[,4]),2),round(max(sales[,5]),2),round(max(sales[,6]),2),round(max(sales[,7]),2),round(max(sales[,8]),2),round((sum(sales$salary=="low")+sum(sales$salary=="medium")*2+sum(sales$salary=="high")*3)/nrow(sales),2))
+
+support_max<-c(round(max(support[,1]),2),round(max(support[,2]),2),round(max(support[,3]),2),round(max(support[,4]),2),round(max(support[,5]),2),round(max(support[,6]),2),round(max(support[,7]),2),round(max(support[,8]),2),round((sum(support$salary=="low")+sum(support$salary=="medium")*2+sum(support$salary=="high")*3)/nrow(support),2))
+
+technical_max<-c(round(max(technical[,1]),2),round(max(technical[,2]),2),round(max(technical[,3]),2),round(max(technical[,4]),2),round(max(technical[,5]),2),round(max(technical[,6]),2),round(max(technical[,7]),2),round(max(technical[,8]),2),round((sum(technical$salary=="low")+sum(technical$salary=="medium")*2+sum(technical$salary=="high")*3)/nrow(technical),2))
+
+max_dept <- rbind(accounting_max,hr_max,IT_max,management_max,marketing_max,product_mng_max,RandD_max,sales_max,support_max, technical_max)
+
+rownames(max_dept) <- c("accounting","HR","IT", "management","marketing","product management","researche and development","sales","support","technical")
+
+colnames(max_dept) <- c("satisfaction level","last evaluation","number of projects","average monthly hours","time spent in the company","work accident","left company","promotion during last 5 years","salary category")
+
+max_dept
+```
+
 
 ## Answering the Business Questions:
 
