@@ -4,6 +4,50 @@ author: "crodrigu"
 date: "February 03, 2017"
 output: html_document
 ---
+<hr>\clearpage
+
+#The Business Questions
+
+The data set being used contains information regarding the employment statsitics and habits of a company from the HR department.  The following are the criteria illustrated in the dataset:
+
+1. Satisfaction level - a number between 0 and 1 - level of satisfaction in current function
+
+2. Evaluation - number between 0 and 1 - 
+
+3. Number of projects - number of projects
+
+4. Average monthly hours
+
+5. Time spent company - number of years worked for the company
+
+6. Work accident - 0 if you've had a work accident, 1 if you have
+
+7. Left - 1 if you've left the company, 0 means you haven't
+
+8. Promotion - 1 if you've had a promotion in the last 5 years, and 0 and if you haven't
+
+9. Department - qualitative (string) 
+
+10. Salary - text - "high", "medium" "low"
+
+Based on the given criteria the business questions that were investigated for the purpose of report: 
+
+1. Why are employees leaving? 
+
+2. What are the three most important factors for people leaving as compared to staying? 
+a) Are we overworking the top performers? 
+
+b) Is money most important? Is satsifaction most important? 
+
+c) Department vs. Global Trends - do we have bad managers? 
+
+3. How can we keep employees using the information that we derive from the data? Can we identify people who are leaving
+
+4. Can we identify loyal employees? 
+
+5. Turnover per department? 
+
+
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -12,61 +56,114 @@ source("read_data.R")
 mean(emp_data[,1])
 ```
 
-## Including Plots
+## Part 1
 
-You can also embed plots, for example:
+Not quite sure what the below data is showing:
+
+Number of hours of current employees:
 ```{r echo=FALSE}
 hr_ds_current <- emp_data %>% filter(left == 0)
 (tot_current <- nrow(hr_ds_current))
 
 ```
 
+:
 ```{r echo=FALSE}
 hr_ds_left <- emp_data %>% filter(left == 1)
 (tot_left <- nrow(hr_ds_left))
 ```
 
-In the following, the comparison between current emplyees metrics and the ones who left is introduced.
+ 
+
+## Part 2: Comparison between current employees and those who left:
+
+*Employee Satisfaction*
 
 ```{r echo=FALSE}
 boxplot(hr_ds_current$satisfaction_level, hr_ds_left$satisfaction_level, names = c("current", "left"))
 t.test(hr_ds_current$satisfaction_level, hr_ds_left$satisfaction_level, var.equal = FALSE)
 ```
-Above test and boxplot shows how the average satisfaction level of the employees who left is lower than the current one.
 
 
+The above test and boxplot shows that the average satisfaction level of  employees who left is lower than those who are still working at the company.
+
+*Employee Evaluation*
 
 ```{r echo=FALSE}
 boxplot(hr_ds_current$last_evaluation, hr_ds_left$last_evaluation, names = c("current", "left"))
 t.test(hr_ds_current$last_evaluation, hr_ds_left$last_evaluation, var.equal = FALSE)
 ```
-Above test p-value and boxplot shows how that there is no significative difference in mean associated to the last evaluation between current and employees who left.
 
+
+The above test p-value and boxplot shows that there is no significant difference in mean associated to the last evaluation between current and employees who left.  In other words, the evaluation that's given is not a reason that employees leave either. 
+
+*Employee Working Hours*
 
 ```{r echo=FALSE}
 boxplot(hr_ds_current$average_montly_hours, hr_ds_left$average_montly_hours, names = c("current", "left"))
 t.test(hr_ds_current$average_montly_hours, hr_ds_left$average_montly_hours, var.equal = FALSE)
 
 ```
-The average working hours of employees who left are significative higher than the current ones.
 
+The above statistic calculation shows that the average working hours of employees who left are significantly higher than the current ones. This could be identified as one of the reasons that the employees left.
+
+*General Term of Employees*
 
 ```{r echo=FALSE}
 boxplot(hr_ds_current$time_spend_company, hr_ds_left$time_spend_company, names = c("current", "left"))
 t.test(hr_ds_current$time_spend_company, hr_ds_left$time_spend_company, var.equal = FALSE)
 ```
-The current employees have spent on average fewer years than the employees who left.
+
+The current employees have spent on average fewer years than the employees who left.  This could indicate that the number of years that the employees who left worked is the general term of an employee at the company. This can be the natural turnover rate.
+
+*Number of Employee Projects*
 
 ```{r echo=FALSE}
 boxplot(hr_ds_current$number_project, hr_ds_left$number_project, names = c("current", "left"))
 t.test(hr_ds_current$number_project, hr_ds_left$number_project, var.equal = FALSE)
 ```
 
-To resume up, we can say that the employees who left:
-they were all good performers
-they were used to work for long hours in office
-a very few got a promotion within the last few years
-unsatisfied employees have been members of just two projects or strictly more than five
+The average number of projects that employees who leave is higher than that of those who are still employed at the company.
+
+
+## Answering the Business Questions:
+
+*1. Why are employees leaving?*
+
+To sum up, we can say employees who left:
+- were all good performers
+- used to work for long hours in the office
+- were most likely not promoted within the last few years
+- were unsatisfied employees have been members of just two projects or strictly more than five
+
+
+*2. What are the three most important factors for people leaving as compared to staying?*
+
+*a) Are we overworking the top performers?*
+This is a possible conclusion, however this would indicate that the employees that left would have a higher evaluation than those who stayed which and work longer hours than those who stayed. However, according to the data, even though those who left worked longer hours, they did not have a higher or lower evaluation.
+
+*b)Is money most important? Is satsifaction most important?*
+
+We didn't answer the first part. The data shows that satisfaction may be an important factor as those who left had a lower level of satisfaction with their job than those who stayed.
+
+*c) Department vs. Global Trends - do we have bad managers?*
+
+How do we determine this? 
+
+*3. How can we keep employees using the information that we derive from the data? Can we identify people who are leaving *
+
+We have derived that the employees that left were good performers, were possibly overworked as they worked more long hours in the office, had not neccessarily received a promotion within the last few years and have been members of either two long projects or more than five (many short projects)
+
+Therefore each of these factors can be used to put a "red flag" on anyone who displays these characteristics to ensure that they are satisfied and catch the problems early.
+
+*4. Can we identify loyal employees?*
+
+According to the statistics loyal employees are those that would stay for longer despite working long hours, or have a recent lower level of satisfaction.
+
+*5. Turnover per department?* 
+
+Don't think we have the data for this yet.
+
 
 ```{r echo=FALSE}
 
