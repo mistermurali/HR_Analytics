@@ -1,7 +1,7 @@
 ---
 title: "HR_script"
 author: "crodrigu"
-date: "February 03, 2017"
+date: "February 05, 2017"
 output: html_document
 ---
 <hr>\clearpage
@@ -65,7 +65,7 @@ mean(emp_data[,1])
 
 
 
-```{r setupdata1E, echo=TRUE, tidy=TRUE}
+```{r setupdata1E, echo=FALSE, tidy=TRUE}
 # Please ENTER the name of the file with the data used. The file should be a .csv with one row per observation (e.g. person) and one column per attribute. Do not add .csv at the end, make sure the data are numeric.
 datafile_name = "data/HR_comma_sep.csv"
 
@@ -80,16 +80,14 @@ max_data_report = 10
 
 ## Part 1
 
-Not quite sure what the below data is showing:
-
-Number of hours of current employees:
+Number of current employees:
 ```{r echo=FALSE}
 hr_ds_current <- emp_data %>% filter(left == 0)
 (tot_current <- nrow(hr_ds_current))
 
 ```
 
-:
+Number of employees who have left:
 ```{r echo=FALSE}
 hr_ds_left <- emp_data %>% filter(left == 1)
 (tot_left <- nrow(hr_ds_left))
@@ -101,9 +99,9 @@ hr_ds_left <- emp_data %>% filter(left == 1)
 
 *Employee Satisfaction*
 
-```{r echo=FALSE}
+```{r echo=FALSE, tidy=TRUE}
 boxplot(hr_ds_current$satisfaction_level, hr_ds_left$satisfaction_level, names = c("current", "left"))
-t.test(hr_ds_current$satisfaction_level, hr_ds_left$satisfaction_level, var.equal = FALSE)
+employee_satisfaction<-t.test(hr_ds_current$satisfaction_level, hr_ds_left$satisfaction_level, var.equal = FALSE)
 ```
 
 
@@ -113,7 +111,7 @@ The above test and boxplot shows that the average satisfaction level of  employe
 
 ```{r echo=FALSE}
 boxplot(hr_ds_current$last_evaluation, hr_ds_left$last_evaluation, names = c("current", "left"))
-t.test(hr_ds_current$last_evaluation, hr_ds_left$last_evaluation, var.equal = FALSE)
+employee_evaluation<-t.test(hr_ds_current$last_evaluation, hr_ds_left$last_evaluation, var.equal = FALSE)
 ```
 
 
@@ -123,7 +121,7 @@ The above test p-value and boxplot shows that there is no significant difference
 
 ```{r echo=FALSE}
 boxplot(hr_ds_current$average_montly_hours, hr_ds_left$average_montly_hours, names = c("current", "left"))
-t.test(hr_ds_current$average_montly_hours, hr_ds_left$average_montly_hours, var.equal = FALSE)
+employee_hours<-t.test(hr_ds_current$average_montly_hours, hr_ds_left$average_montly_hours, var.equal = FALSE)
 
 ```
 
@@ -133,7 +131,7 @@ The above statistic calculation shows that the average working hours of employee
 
 ```{r echo=FALSE}
 boxplot(hr_ds_current$time_spend_company, hr_ds_left$time_spend_company, names = c("current", "left"))
-t.test(hr_ds_current$time_spend_company, hr_ds_left$time_spend_company, var.equal = FALSE)
+employee_spend<-t.test(hr_ds_current$time_spend_company, hr_ds_left$time_spend_company, var.equal = FALSE)
 ```
 
 The current employees have spent on average fewer years than the employees who left.  This could indicate that the number of years that the employees who left worked is the general term of an employee at the company. This can be the natural turnover rate.
@@ -142,10 +140,12 @@ The current employees have spent on average fewer years than the employees who l
 
 ```{r echo=FALSE}
 boxplot(hr_ds_current$number_project, hr_ds_left$number_project, names = c("current", "left"))
-t.test(hr_ds_current$number_project, hr_ds_left$number_project, var.equal = FALSE)
+num_proj<-t.test(hr_ds_current$number_project, hr_ds_left$number_project, var.equal = FALSE)
 ```
 
 The average number of projects that employees who leave is higher than that of those who are still employed at the company.
+
+#Department specific analysis
 
 In order to analyse the data per department, we create a table per department.
 ```{r echo=FALSE}
@@ -197,11 +197,11 @@ technical_mean<-c(round(mean(technical[,1]),2),round(mean(technical[,2]),2),roun
 
 mean_dept <- rbind(accounting_mean,hr_mean,IT_mean,management_mean,marketing_mean,product_mng_mean,RandD_mean,sales_mean,support_mean, technical_mean)
 
-rownames(mean_dept) <- c("accounting","HR","IT", "management","marketing","product management","researche and development","sales","support","technical")
+rownames(mean_dept) <- c("accounting","HR","IT", "management","marketing","product management","research and development","sales","support","technical")
 
 colnames(mean_dept) <- c("satisfaction level","last evaluation","number of projects","average monthly hours","time spent in the company","work accident","left company","promotion during last 5 years","salary category")
 
-mean_dept
+iprint.df(mean_dept)
 ```
 
 
@@ -230,11 +230,11 @@ technical_sd<-c(round(sd(technical[,1]),2),round(sd(technical[,2]),2),round(sd(t
 
 sd_dept <- rbind(accounting_sd,hr_sd,IT_sd,management_sd,marketing_sd,product_mng_sd,RandD_sd,sales_sd,support_sd, technical_sd)
 
-rownames(sd_dept) <- c("accounting","HR","IT", "management","marketing","product management","researche and development","sales","support","technical")
+rownames(sd_dept) <- c("accounting","HR","IT", "management","marketing","product management","research and development","sales","support","technical")
 
 colnames(sd_dept) <- c("satisfaction level","last evaluation","number of projects","average monthly hours","time spent in the company","work accident","left company","promotion during last 5 years","salary category")
 
-sd_dept
+iprint.df(sd_dept)
 ```
 
 We calculate the minimum value of each parameter.
@@ -261,14 +261,14 @@ technical_min<-c(round(min(technical[,1]),2),round(min(technical[,2]),2),round(m
 
 min_dept <- rbind(accounting_min,hr_min,IT_min,management_min,marketing_min,product_mng_min,RandD_min,sales_min,support_min, technical_min)
 
-rownames(min_dept) <- c("accounting","HR","IT", "management","marketing","product management","researche and development","sales","support","technical")
+rownames(min_dept) <- c("accounting","HR","IT", "management","marketing","product management","research and development","sales","support","technical")
 
 colnames(min_dept) <- c("satisfaction level","last evaluation","number of projects","average monthly hours","time spent in the company","work accident","left company","promotion during last 5 years","salary category")
 
-min_dept
+iprint.df(min_dept)
 ```
 
-We calculate the minimum value of each parameter.
+We calculate the maxiimum value of each parameter.
 ```{r echo=FALSE}
 accounting_max<-c(round(max(accounting[,1]),2),round(max(accounting[,2]),2),round(max(accounting[,3]),2),round(max(accounting[,4]),2),round(max(accounting[,5]),2),round(max(accounting[,6]),2),round(max(accounting[,7]),2),round(max(accounting[,8]),2),round((sum(accounting$salary=="low")+sum(accounting$salary=="medium")*2+sum(accounting$salary=="high")*3)/nrow(accounting),2))
 
@@ -292,11 +292,11 @@ technical_max<-c(round(max(technical[,1]),2),round(max(technical[,2]),2),round(m
 
 max_dept <- rbind(accounting_max,hr_max,IT_max,management_max,marketing_max,product_mng_max,RandD_max,sales_max,support_max, technical_max)
 
-rownames(max_dept) <- c("accounting","HR","IT", "management","marketing","product management","researche and development","sales","support","technical")
+rownames(max_dept) <- c("accounting","HR","IT", "management","marketing","product management","research and development","sales","support","technical")
 
 colnames(max_dept) <- c("satisfaction level","last evaluation","number of projects","average monthly hours","time spent in the company","work accident","left company","promotion during last 5 years","salary category")
 
-max_dept
+iprint.df(max_dept)
 ```
 
 # Factor Analysis
@@ -324,9 +324,9 @@ rotation_used = "varimax"
 ```
 
 
-# Apply factors and scale the data 
+First, we apply the factors and scale the data 
 
-```{r}
+```{r echo=FALSE}
 factor_attributes_used <- intersect(factor_attributes_used, 1:ncol(ProjectData))
 ProjectDataFactor <- ProjectData[,factor_attributes_used]
 ProjectDataFactor <- ProjectData <- data.matrix(ProjectDataFactor)
@@ -341,14 +341,14 @@ ProjectDataFactor <- ProjectDatafactor_scaled
 
 # Visual exploration of the data
 
-```{r}
+```{r echo=FALSE}
 rownames(ProjectDataFactor) <- paste0("Obs.", sprintf("%02i", 1:nrow(ProjectDataFactor)))
 iprint.df(t(head(round(ProjectDataFactor, 2), max_data_report)))
 ```
 
 The data we use here have the following descriptive statistics: 
 
-```{r}
+```{r echo=FALSE}
 iprint.df(round(my_summary(ProjectDataFactor), 2))
 ```
 
@@ -356,7 +356,7 @@ iprint.df(round(my_summary(ProjectDataFactor), 2))
 
 This is the correlation matrix of the customer responses to the `r ncol(ProjectDataFactor)` attitude questions - which are the only questions that we will use for the segmentation (see the case):
 
-```{r}
+```{r echo=FALSE}
 thecor = round(cor(ProjectDataFactor),2)
 iprint.df(round(thecor,2), scale=TRUE)
 ```
@@ -364,7 +364,7 @@ iprint.df(round(thecor,2), scale=TRUE)
 
 ## Choose number of factors - Principal Factor analysis
 
-```{r}
+```{r echo=FALSE}
 # Here is how the `principal` function is used 
 UnRotated_Results<-principal(ProjectDataFactor, nfactors=ncol(ProjectDataFactor), rotate="none",score=TRUE)
 UnRotated_Factors<-round(UnRotated_Results$loadings,2)
@@ -372,7 +372,7 @@ UnRotated_Factors<-as.data.frame(unclass(UnRotated_Factors))
 colnames(UnRotated_Factors)<-paste("Comp",1:ncol(UnRotated_Factors),sep="")
 ```
 
-```{r}
+```{r echo=FALSE}
 # Here is how we use the `PCA` function 
 Variance_Explained_Table_results<-PCA(ProjectDataFactor, graph=FALSE)
 Variance_Explained_Table<-Variance_Explained_Table_results$eig
@@ -384,11 +384,11 @@ colnames(Variance_Explained_Table) <- c("Eigenvalue", "Pct of explained variance
 
 Let's look at the **variance explained** as well as the **eigenvalues** :
 
-```{r}
+```{r echo=FALSE}
 iprint.df(round(Variance_Explained_Table, 2))
 ```
 
-```{r}
+```{r echo=FALSE}
 eigenvalues  <- Variance_Explained_Table[, "Eigenvalue"]
 df           <- cbind(as.data.frame(eigenvalues), c(1:length(eigenvalues)), rep(1, length(eigenvalues)))
 colnames(df) <- c("eigenvalues", "components", "abline")
@@ -399,7 +399,7 @@ iplot.df(melt(df, id="components"))
 
 Let's now see how the "top factors" look like. 
 
-```{r}
+```{r echo=FALSE}
 if (factor_selectionciterion == "eigenvalue")
   factors_selected = sum(Variance_Explained_Table_copy[,1] >= 1)
 if (factor_selectionciterion == "variance")
@@ -410,7 +410,7 @@ if (factor_selectionciterion == "manual")
 
 # Rotation applied on factors
 
-```{r}
+```{r echo=FALSE}
 Rotated_Results<-principal(ProjectDataFactor, nfactors=max(factors_selected), rotate=rotation_used,score=TRUE)
 Rotated_Factors<-round(Rotated_Results$loadings,2)
 Rotated_Factors<-as.data.frame(unclass(Rotated_Factors))
@@ -424,7 +424,7 @@ iprint.df(Rotated_Factors, scale=TRUE)
 
 To better visualize and interpret the factors we often "suppress" loadings with small values, e.g. with absolute values smaller than 0.5. In this case our factors look as follows after suppressing the small numbers:
 
-```{r}
+```{r echo=FALSE}
 Rotated_Factors_thres <- Rotated_Factors
 Rotated_Factors_thres[abs(Rotated_Factors_thres) < MIN_VALUE]<-NA
 colnames(Rotated_Factors_thres)<- colnames(Rotated_Factors)
@@ -437,93 +437,12 @@ iprint.df(Rotated_Factors_thres, scale=TRUE)
 
 We can now either replace all initial variables used in this part with the factors scores or just select one of the initial variables for each of the selected factors in order to represent that factor. Here is how the factor scores  are for the first few respondents:
 
-```{r}
+```{r echo=FALSE}
 NEW_ProjectData <- round(Rotated_Results$scores[,1:factors_selected,drop=F],2)
 colnames(NEW_ProjectData)<-paste("DV (Factor)",1:ncol(NEW_ProjectData),sep=" ")
 
 iprint.df(t(head(NEW_ProjectData, 10)), scale=TRUE)
 ```
-
-
-## Including Plots
-=======
-## Part 1
->>>>>>> 6b92b1097f282103a038378de882e53602fc0929
-
-Not quite sure what the below data is showing:
-
-Number of hours of current employees:
-```{r echo=FALSE}
-hr_ds_current <- emp_data %>% filter(left == 0)
-(tot_current <- nrow(hr_ds_current))
-
-```
-
-:
-```{r echo=FALSE}
-hr_ds_left <- emp_data %>% filter(left == 1)
-(tot_left <- nrow(hr_ds_left))
-```
-
- 
-
-## Part 2: Comparison between current employees and those who left:
-
-*Employee Satisfaction*
-
-```{r echo=FALSE}
-boxplot(hr_ds_current$satisfaction_level, hr_ds_left$satisfaction_level, names = c("current", "left"))
-t.test(hr_ds_current$satisfaction_level, hr_ds_left$satisfaction_level, var.equal = FALSE)
-```
-
-
-The above test and boxplot shows that the average satisfaction level of  employees who left is lower than those who are still working at the company.
-
-*Employee Evaluation*
-
-```{r echo=FALSE}
-boxplot(hr_ds_current$last_evaluation, hr_ds_left$last_evaluation, names = c("current", "left"))
-t.test(hr_ds_current$last_evaluation, hr_ds_left$last_evaluation, var.equal = FALSE)
-```
-
-
-The above test p-value and boxplot shows that there is no significant difference in mean associated to the last evaluation between current and employees who left.  In other words, the evaluation that's given is not a reason that employees leave either. 
-
-*Employee Working Hours*
-
-```{r echo=FALSE}
-boxplot(hr_ds_current$average_montly_hours, hr_ds_left$average_montly_hours, names = c("current", "left"))
-t.test(hr_ds_current$average_montly_hours, hr_ds_left$average_montly_hours, var.equal = FALSE)
-
-```
-
-The above statistic calculation shows that the average working hours of employees who left are significantly higher than the current ones. This could be identified as one of the reasons that the employees left.
-
-*General Term of Employees*
-
-
-```{r echo=FALSE}
-boxplot(hr_ds_current$time_spend_company, hr_ds_left$time_spend_company, names = c("current", "left"))
-t.test(hr_ds_current$time_spend_company, hr_ds_left$time_spend_company, var.equal = FALSE)
-```
-
-The current employees have spent on average fewer years than the employees who left.  This could indicate that the number of years that the employees who left worked is the general term of an employee at the company. This can be the natural turnover rate.
-
-*Number of Employee Projects*
-
-```{r echo=FALSE}
-boxplot(hr_ds_current$number_project, hr_ds_left$number_project, names = c("current", "left"))
-t.test(hr_ds_current$number_project, hr_ds_left$number_project, var.equal = FALSE)
-```
-
-<<<<<<< HEAD
-To sum up, we can say that the employees who left:
-they were all good performers
-they were used to work for long hours in office
-a very few got a promotion within the last few years
-unsatisfied employees have been members of just two projects or strictly more than five
-=======
-The average number of projects that employees who leave is higher than that of those who are still employed at the company.
 
 
 ## Answering the Business Questions:
@@ -540,15 +459,17 @@ To sum up, we can say employees who left:
 *2. What are the three most important factors for people leaving as compared to staying?*
 
 *a) Are we overworking the top performers?*
+
 This is a possible conclusion, however this would indicate that the employees that left would have a higher evaluation than those who stayed which and work longer hours than those who stayed. However, according to the data, even though those who left worked longer hours, they did not have a higher or lower evaluation.
 
-*b)Is money most important? Is satsifaction most important?*
+*b) Is money most important? Is satisfaction most important?*
 
-We didn't answer the first part. The data shows that satisfaction may be an important factor as those who left had a lower level of satisfaction with their job than those who stayed.
+The data shows that satisfaction may be an important factor as those who left had a lower level of satisfaction with their job than those who stayed. 
+The raw data captured only split the salary into high, medium and low categories. Withouot more speicifc data it is difficult to draw a conclusion if salary plays a significant part in employe eretention 
 
 *c) Department vs. Global Trends - do we have bad managers?*
 
-How do we determine this? 
+We don't see any significant differences across the departments. 
 
 *3. How can we keep employees using the information that we derive from the data? Can we identify people who are leaving *
 
@@ -562,4 +483,8 @@ According to the statistics loyal employees are those that would stay for longer
 
 *5. Turnover per department?* 
 
-Don't think we have the data for this yet.
+The turnover per department is as follows
+
+```{r echo=FALSE}
+iprint.df(mean_dept[,7])
+```
