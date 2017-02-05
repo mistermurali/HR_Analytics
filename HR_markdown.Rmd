@@ -51,6 +51,7 @@ t.test(hr_ds_current$average_montly_hours, hr_ds_left$average_montly_hours, var.
 The average working hours of employees who left are significative higher than the current ones.
 
 
+
 ```{r echo=FALSE}
 boxplot(hr_ds_current$time_spend_company, hr_ds_left$time_spend_company, names = c("current", "left"))
 t.test(hr_ds_current$time_spend_company, hr_ds_left$time_spend_company, var.equal = FALSE)
