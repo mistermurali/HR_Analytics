@@ -49,6 +49,7 @@ c) Department vs. Global Trends - do we have bad managers?
 
 
 
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 
